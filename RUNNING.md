@@ -88,16 +88,16 @@ python bgpy/build_pybloom_filter.py
 ## 3. 분석 / 플롯 스크립트
 
 `scripts/` 에 측정·플롯 스크립트가 있습니다.
+`plot`만 확인하려면 이미 결과 csv가 있으므로 `plot_filter_coverage.py`만 돌려도 됩니다.
 
 ```bash
 python scripts/measure_filter_coverage_multi_mp.py   # 필터 커버리지 측정
-# scripts/filter_coveragte_path.csv 파일 생성됨
+                                                     # scripts/filter_coveragte_path.csv 파일 생성됨
 python scripts/measure_aspawn_lookups.py             # ASPAwN filter 시간 측정
-# scripts/aspawn_lookups.csv 파일 생성
+                                                     # scripts/aspawn_lookups.csv 파일 생성
 python scripts/plot_filter_coverage.py               # 결과 그래프 생성 (scripts/plots/)
 ```
 
 ## 참고
 
 - 원본 BGPy 문서/튜토리얼: [README.md](README.md) 및 [BGPy Wiki](https://github.com/jfuruness/bgpy/wiki/Tutorial)
-- 대용량 산출물(`.sqlite3`, `.bloom`)은 GitHub 100MB 제한에 걸릴 수 있으니 Git LFS 또는 외부 스토리지 사용을 권장합니다.
