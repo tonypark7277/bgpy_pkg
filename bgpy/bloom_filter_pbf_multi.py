@@ -14,6 +14,7 @@ Usage:
 """
 
 import json
+import os
 import struct
 from pathlib import Path
 
@@ -28,7 +29,11 @@ except ImportError as exc:
 
 from bgpy.bloom_filter_pbf_user import _encode_key
 
-BASE_DIR = Path("/home/BGPfilter/UpPathDB_backup")
+# Directory holding the prebuilt bloom filters. Defaults to the bgpy package
+# directory (where build_pybloom_filter.py writes them), so a fresh clone uses
+# its own filters. Override with the BGPY_FILTER_DIR env var to load from
+# elsewhere (e.g. the UpPathDB_backup folder of prebuilt filters).
+BASE_DIR = Path(os.environ.get("BGPY_FILTER_DIR") or Path(__file__).resolve().parent)
 
 FILTER_REGISTRY: dict[int, tuple[Path, Path]] = {
     8:  (BASE_DIR / "bgpy_path_filter_pbf_max08.bloom",
