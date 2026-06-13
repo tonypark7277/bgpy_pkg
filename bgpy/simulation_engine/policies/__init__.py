@@ -38,6 +38,9 @@ from .rovpp import (
     ROVPPV2Lite,
     ROVPPV2LiteFull,
 )
+from .up_path import UpPath
+from .up_path_old import UpPathOld
+
 
 __all__ = [
     "BGP",
@@ -90,4 +93,6 @@ __all__ = [
     "ASPAwNFull",
     "ShortestPathPrefixASPAAttacker",
     "FirstASNStrippingPrefixASPAAttacker",
+    "UpPath",
+    "UpPathOld", 
 ]
