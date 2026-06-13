@@ -11,6 +11,7 @@ import sqlite3
 import time
 from collections.abc import Iterator
 from contextlib import closing
+from datetime import datetime
 from pathlib import Path
 from struct import pack
 
@@ -29,6 +30,10 @@ DEFAULT_MAX_PATH_LEN = MAX_HOPS_TO_TIER1 + 1   # node count cap (top..origin inc
 MIN_SEG_LEN = 2        # we only insert sub-segments of length >= 2
 BATCH_SIZE = 20_000
 SCHEMA_VERSION = 1
+# CAIDA snapshot pinned for reproducibility (the MONTH selects the snapshot;
+# the day is ignored). Keep in sync with the measurement scripts so the DB,
+# the bloom filters, and the coverage runs all describe the same topology.
+DL_TIME = datetime(2026, 5, 19)
 
 
 def db_path_for(max_path_len: int) -> Path:
@@ -38,8 +43,11 @@ def db_path_for(max_path_len: int) -> Path:
     )
 
 
-# (a) Build topology once (uses CAIDA cache if present)
-as_graph = CAIDAASGraphConstructor().run()
+# (a) Build topology once (uses CAIDA cache if present, else downloads the
+#     pinned DL_TIME snapshot to bgpy's default cache dir).
+as_graph = CAIDAASGraphConstructor(
+    as_graph_collector_kwargs={"dl_time": DL_TIME},
+).run()
 
 
 # (b) DFS upward from an origin AS. Yields tuples (top, ..., origin).
