@@ -85,6 +85,23 @@ python bgpy/build_pybloom_filter.py
 
 > 첫 실행 시 CAIDA AS-graph 를 내려받아 캐시합니다. 이후 실행은 캐시를 재사용합니다. -->
 
+## 2-1. Build된 Filter 다운도르
+
+https://drive.google.com/file/d/1DFFQKRQ6Btx-DVN14nWchAbt0AYvKB_k/view?usp=sharing
+
+위의 구글드라이브에서 파일을 다운로드 한 후, 아래의 파일들을 `bgpy_pkg/bgpy` 폴더에 복사
+| 파일 |
+|------|
+| `bgpy_path_filter_pbf_max08.bloom` |
+| `bgpy_path_filter_pbf_max08.meta.json` |
+| `bgpy_path_filter_pbf_max09.bloom` |
+| `bgpy_path_filter_pbf_max09.meta.json` |
+| `bgpy_path_filter_pbf_max10.bloom` |
+| `bgpy_path_filter_pbf_max10.meta.json` |
+| `bgpy_path_filter_pbf_max11.bloom` |
+| `bgpy_path_filter_pbf_max11.meta.json` |
+
+
 ## 3. 분석 / 플롯 스크립트
 
 `scripts/` 에 측정·플롯 스크립트가 있습니다.
