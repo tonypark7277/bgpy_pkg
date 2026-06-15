@@ -105,7 +105,8 @@ https://drive.google.com/file/d/1DFFQKRQ6Btx-DVN14nWchAbt0AYvKB_k/view?usp=shari
 ## 3. 분석 / 플롯 스크립트
 
 `scripts/` 에 측정·플롯 스크립트가 있습니다.
-`plot`만 확인하려면 이미 결과 csv가 있으므로 `plot_filter_coverage.py`만 돌려도 됩니다.
+`measure_filter_coverage_multi_mp.py`에서는 검증하는 path가 random으로 선택되기에 세부 결과는 발표에서 사용한 값과 달라질 수 있습니다.
+하지만 이미 `filter_coverage_paths.csv` 결과 파일도 함께 올렸기 때문에 그래프만 확인하신다면 `plot_filter_coverage.py`만 돌려도 됩니다.
 
 ```bash
 python scripts/measure_filter_coverage_multi_mp.py   # 필터 커버리지 측정
