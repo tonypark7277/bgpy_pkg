@@ -50,7 +50,11 @@ except ImportError as exc:
 # FILTER_PATH = Path(__file__).resolve().with_name("bgpy_path_filter_pbf.bloom")
 # META_PATH   = Path(__file__).resolve().with_name("bgpy_path_filter_pbf.meta.json")
 
-BASE_DIR = Path("/home/BGPfilter/UpPathDB_backup")
+# Directory holding the prebuilt bloom filters / segment DBs. Defaults to the
+# bgpy package directory (where build_pybloom_filter.py writes them), so a fresh
+# clone uses its own files. Override with the BGPY_FILTER_DIR env var to load
+# from elsewhere (e.g. the UpPathDB_backup folder of prebuilt filters).
+BASE_DIR = Path(os.environ.get("BGPY_FILTER_DIR") or Path(__file__).resolve().parent)
 
 DB_PATH     = BASE_DIR / "bgpy_path_segments_max10.sqlite3"
 FILTER_PATH = BASE_DIR / "bgpy_path_filter_pbf_max10.bloom"

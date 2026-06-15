@@ -51,25 +51,46 @@ HERE = Path(__file__).resolve().parent
 INPUT_CSV = HERE / "filter_coverage_paths.csv"
 OUTPUT_CSV = HERE / "aspawn_lookups.csv"
 
-as_graph_constructor_kwargs = frozendict(
-    {
-        "as_graph_collector_kwargs": frozendict(
-            {
-                "dl_time": datetime(2026, 5, 19),
-                "cache_dir": Path("/home/BGPfilter/.cache/bgpy/2026-05-29"),
-            }
-        ),
-        "as_graph_kwargs": frozendict(
-            {
-                "store_customer_cone_size": True,
-                "store_customer_cone_asns": False,
-                "store_provider_cone_size": False,
-                "store_provider_cone_asns": False,
-            }
-        ),
-        "tsv_path": None,
-    }
-)
+# --- CAIDA AS-graph snapshot config -----------------------------------------
+# The MONTH of DL_TIME selects which CAIDA snapshot is used (the day is
+# ignored). Pinned here for reproducibility; keep in sync with
+# build_path_filter.py and the coverage measurement so every artifact
+# describes the same topology.
+DL_TIME = datetime(2026, 5, 19)
+# Where to cache the downloaded snapshot.
+#   None  -> use bgpy's default cache dir (~/.cache/bgpy/<today>); it is
+#            created and the snapshot downloaded automatically on first run,
+#            so a fresh clone with no existing cache just works.
+#   Path  -> reuse a specific existing cache dir instead of downloading.
+CACHE_DIR = None  # e.g. Path("/home/BGPfilter/.cache/bgpy/2026-05-29")
+
+
+def _build_constructor_kwargs():
+    """Assemble the CAIDAASGraphConstructor kwargs from the config above.
+
+    cache_dir is only pinned when CACHE_DIR is set; otherwise it is omitted so
+    bgpy falls back to its default cache dir (download-on-demand).
+    """
+    collector_kwargs = {"dl_time": DL_TIME}
+    if CACHE_DIR is not None:
+        collector_kwargs["cache_dir"] = CACHE_DIR
+    return frozendict(
+        {
+            "as_graph_collector_kwargs": frozendict(collector_kwargs),
+            "as_graph_kwargs": frozendict(
+                {
+                    "store_customer_cone_size": True,
+                    "store_customer_cone_asns": False,
+                    "store_provider_cone_size": False,
+                    "store_provider_cone_asns": False,
+                }
+            ),
+            "tsv_path": None,
+        }
+    )
+
+
+as_graph_constructor_kwargs = _build_constructor_kwargs()
 
 
 def recv_relationship(as_path: tuple[int, ...], as_dict) -> Relationships:
