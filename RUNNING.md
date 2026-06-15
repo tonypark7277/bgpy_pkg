@@ -85,7 +85,7 @@ python bgpy/build_pybloom_filter.py
 
 > 첫 실행 시 CAIDA AS-graph 를 내려받아 캐시합니다. 이후 실행은 캐시를 재사용합니다. -->
 
-## 2-1. Build된 Filter 다운도르
+## 2-1. Build된 Filter 다운로드
 
 https://drive.google.com/file/d/1DFFQKRQ6Btx-DVN14nWchAbt0AYvKB_k/view?usp=sharing
 
@@ -110,7 +110,7 @@ https://drive.google.com/file/d/1DFFQKRQ6Btx-DVN14nWchAbt0AYvKB_k/view?usp=shari
 
 ```bash
 python scripts/measure_filter_coverage_multi_mp.py   # 필터 커버리지 측정
-                                                     # scripts/filter_coveragte_path.csv 파일 생성됨
+                                                     # scripts/filter_coverage_path.csv 파일 생성됨
 python scripts/measure_aspawn_lookups.py             # ASPAwN filter 시간 측정
                                                      # scripts/aspawn_lookups.csv 파일 생성
 python scripts/plot_filter_coverage.py               # 결과 그래프 생성 (scripts/plots/)
